@@ -26,12 +26,13 @@ These instructions are primarily for the Ubuntu/Linux system. First, open a comm
 
 3. To run the C, Fortran, and Ada executables of a particular project, say PROBLEM-001, use the following commands respectively:
 
-`./run 1 c`
+* `./run 1 c`
 
-`./run 1 f`
+* `./run 1 f`
 
-`./run 1 a`
+* `./run 1 a`
 
+<br>
 To clean the projects by removing the executables are restoring the folder to its former state, use the following command:<br>
 `./make clean`
 
