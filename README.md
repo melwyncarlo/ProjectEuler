@@ -33,7 +33,9 @@ These instructions are primarily for the Ubuntu/Linux system. First, open a comm
 * `./run 1 a`
 
 <br>
-To clean the projects by removing the executables are restoring the folder to its former state, use the following command:<br>
+To clean the projects by removing the executables are restoring the folder to its former state, use the following command:
+
+
 `./make clean`
 
 
