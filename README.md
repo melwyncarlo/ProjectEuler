@@ -37,4 +37,4 @@ To clean the projects by removing the executables are restoring the folder to it
 
 <br>
 Screenshot images have been provided to visibly assist in comprehending the above mentioned instructions: 
-[Screenshots Folder]().
+[Screenshots Folder](https://github.com/melwyncarlo/ProjectEuler/tree/main/img).
