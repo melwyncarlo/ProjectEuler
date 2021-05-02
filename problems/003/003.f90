@@ -1,5 +1,6 @@
 PROGRAM F003
 
+    ! Copyright 2021 Melwyn Francis Carlo
     ! FILE REFERENCE: http://www.naturalnumbers.org/primes.html
 
     IMPLICIT NONE

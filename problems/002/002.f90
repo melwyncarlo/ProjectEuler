@@ -1,5 +1,7 @@
 PROGRAM F002
 
+    ! Copyright 2021 Melwyn Francis Carlo
+
     IMPLICIT NONE
 
     INTEGER :: N

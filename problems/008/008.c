@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 int main() {
     char *thousand_digit_num = 
         "73167176531330624919225119674426574742355349194934"

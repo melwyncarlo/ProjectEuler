@@ -2,6 +2,8 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Numerics.Long_Elementary_Functions;
 use Ada.Numerics.Long_Elementary_Functions;
 
+-- Copyright 2021 Melwyn Francis Carlo
+
 procedure A003 is
 
    -- File Reference: http://www.naturalnumbers.org/primes.html

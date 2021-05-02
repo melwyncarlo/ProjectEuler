@@ -1,6 +1,8 @@
 with Ada.Text_IO;
 use Ada.Text_IO;
 
+-- Copyright 2021 Melwyn Francis Carlo
+
 procedure A001 is
 
    Val_1A, Val_1B, Val_2A, Val_2B, Val_3A, Val_3B : FLoat;

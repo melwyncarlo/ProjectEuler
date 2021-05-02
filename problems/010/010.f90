@@ -1,5 +1,7 @@
 PROGRAM F010
 
+    ! Copyright 2021 Melwyn Francis Carlo
+
     IMPLICIT NONE
 
     INTEGER, PARAMETER :: N = 2E+6

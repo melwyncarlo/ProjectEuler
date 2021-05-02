@@ -1,6 +1,8 @@
 with Ada.Text_IO;
 use Ada.Text_IO;
 
+-- Copyright 2021 Melwyn Francis Carlo
+
 procedure A009 is
 
    B             : Float;

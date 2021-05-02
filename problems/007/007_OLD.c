@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 int main() {
     int nth = 10001;
     // Using the algorithm of Sieve of Sundaram

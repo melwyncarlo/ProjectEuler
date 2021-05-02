@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 int main() {
     int n = 100;
     int sum = (n * (n + 1)) / 2;

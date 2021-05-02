@@ -1,5 +1,7 @@
 PROGRAM F008
 
+    ! Copyright 2021 Melwyn Francis Carlo
+
     IMPLICIT NONE
 
     INTEGER :: I, J, STR_TO_INT

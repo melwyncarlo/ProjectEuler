@@ -1,6 +1,8 @@
 with Ada.Text_IO;
 use Ada.Text_IO;
 
+-- Copyright 2021 Melwyn Francis Carlo
+
 procedure A006 is
 
    N, Sum, Square_Of_Sum, Sum_Of_Square : Integer;

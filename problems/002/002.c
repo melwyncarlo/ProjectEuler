@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 long int binets_formula(int n_val) {
     return (1 / sqrt(5)) * (pow((1+sqrt(5)) / 2, n_val) 
     - pow((1-sqrt(5)) / 2, n_val));

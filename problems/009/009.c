@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 int main() {
     int a = 1;
     while (1) {

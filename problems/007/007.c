@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 int main() {
     int nth = 10001;
     int n = 1E+6;

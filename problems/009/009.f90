@@ -1,5 +1,7 @@
 PROGRAM F009
 
+    ! Copyright 2021 Melwyn Francis Carlo
+
     IMPLICIT NONE
 
     INTEGER :: A, C, PRODUCT_VAL

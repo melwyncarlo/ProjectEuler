@@ -1,5 +1,7 @@
 PROGRAM F006
 
+    ! Copyright 2021 Melwyn Francis Carlo
+
     IMPLICIT NONE
 
     INTEGER :: N, N_SUM, SQUARE_OF_SUM, SUM_OF_SQUARE

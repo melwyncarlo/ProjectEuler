@@ -2,6 +2,8 @@
 #include <string.h>
 #include <math.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 char *strrev(char *str)
 {
         char *p1, *p2;

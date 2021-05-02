@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 int main() {
     int n = 2E+6;
     // Using the algorithm of Sieve of Eratosthenes

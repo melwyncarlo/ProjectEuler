@@ -1,5 +1,7 @@
 PROGRAM F001
 
+    ! Copyright 2021 Melwyn Francis Carlo
+
     IMPLICIT NONE
 
     INTEGER, PARAMETER :: VAL_1A = FLOOR((1000.0 - 1.0) / 3.0);

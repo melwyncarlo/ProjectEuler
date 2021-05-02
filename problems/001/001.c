@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
+/* Copyright 2021 Melwyn Francis Carlo */
+
 int main() {
     int val_1a = floor((1000-1) / 3);
     int val_1b = 3 * ((val_1a * (val_1a + 1)) / 2);

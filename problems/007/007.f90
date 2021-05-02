@@ -1,5 +1,7 @@
 PROGRAM F007
 
+    ! Copyright 2021 Melwyn Francis Carlo
+
     IMPLICIT NONE
 
     INTEGER, PARAMETER :: NTH = 10001, N = 1E+6

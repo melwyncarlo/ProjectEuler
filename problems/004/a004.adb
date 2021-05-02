@@ -2,6 +2,8 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Strings; use Ada.Strings;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
 
+-- Copyright 2021 Melwyn Francis Carlo
+
 procedure A004 is
    ----------------------------------------------------------------------------
    procedure StrRev       (Inp_Str : in out String);

@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-// File Reference: http://www.naturalnumbers.org/primes.html
+/* Copyright 2021 Melwyn Francis Carlo */
+/* File Reference: http://www.naturalnumbers.org/primes.html */
 
 int main() {
     FILE *fp;

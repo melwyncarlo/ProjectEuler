@@ -1,6 +1,8 @@
 with Ada.Text_IO;
 use Ada.Text_IO;
 
+-- Copyright 2021 Melwyn Francis Carlo
+
 procedure A010 is
 
    N          : constant Integer := 2E+6;
