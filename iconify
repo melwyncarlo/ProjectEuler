@@ -1,0 +1,34 @@
+#!/bin/bash
+
+MAX_N=745
+
+echo -ne "\n Iconifying ... "
+
+for i in $(seq -f "%03g" 1 $MAX_N)
+do
+    if [ -d "problems/${i}" ]
+    then
+        if [ -f "problems/${i}/${i}.c" ]
+        then
+            gio set -t string problems/${i}/${i}.c metadata::custom-icon \
+            file:////$PWD/icons/text-x-c.png
+        fi
+        if [ -f "problems/${i}/${i}.f90" ]
+        then
+            gio set -t string problems/${i}/${i}.f90 metadata::custom-icon \
+            file:////$PWD/icons/text-x-fortran.png
+        fi
+        if [ -f "problems/${i}/a${i}.adb" ]
+        then
+            gio set -t string problems/${i}/a${i}.adb metadata::custom-icon \
+            file:////$PWD/icons/text-x-ada.png
+        fi
+        if [ -f "problems/${i}/Answer" ]
+        then
+            gio set -t string problems/${i}/Answer metadata::custom-icon \
+            file:////$PWD/icons/text-x-answer.png
+        fi
+    fi
+done
+
+echo -e "Done.\n\n"
