@@ -36,4 +36,5 @@ To clean the projects by removing the executables are restoring the folder to it
 `./make clean`
 
 <br>
-Screenshot images have been provided to visibly assist in comprehending the above mentioned instructions: [ProjectEuler Website](https://projecteuler.net/).
+Screenshot images have been provided to visibly assist in comprehending the above mentioned instructions: 
+[Screenshots Folder]().
