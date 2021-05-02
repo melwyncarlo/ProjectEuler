@@ -35,6 +35,8 @@ These instructions are primarily for the Ubuntu/Linux system. First, open a comm
 To clean the projects by removing the executables are restoring the folder to its former state, use the following command:<br>
 `./make clean`
 
-<br>
+
+### <br>Note
+
 Screenshot images have been provided to visibly assist in comprehending the above mentioned instructions: 
 [Screenshots Folder](https://github.com/melwyncarlo/ProjectEuler/tree/main/img).
