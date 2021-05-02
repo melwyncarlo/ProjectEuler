@@ -1,5 +1,7 @@
 # ProjectEuler
 
+![ProjectEuler Badge](https://projecteuler.net/profile/melwyncarlo.png)
+
 ### <br>Description
 
 A series of challenging mathematical/computer programming problems, solved using the following programming languages:
