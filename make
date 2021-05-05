@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Copyright 2021 Melwyn Francis Carlo
+
 OPTION=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 MAX_N=745
 
@@ -89,7 +91,8 @@ else
             rm -f "problems/${i}/a${i}.o"
         fi
     done
-    run_file_contents="#\!/bin/bash\n\nPROBLEM_NUM=\$1\nPROBLEM_LANG=\$2\n\n"
+    run_file_contents="#\!/bin/bash\n\n# Copyright 2021 Melwyn Francis Carlo"
+    run_file_contents+="\n\nPROBLEM_NUM=\$1\nPROBLEM_LANG=\$2\n\n"
     run_file_contents+="if ! [[ \"\$PROBLEM_NUM\" =~ ^[0-9]+$ ]]\nthen\n\t"
     run_file_contents+="echo -e \"\\\n\\\n Error: The problem number must be "
     run_file_contents+="of integer value.\\\n\\\n\"\n\texit 22\nfi\n\n"

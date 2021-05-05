@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Copyright 2021 Melwyn Francis Carlo
+
 MAX_N=745
 
 echo -ne "\n Iconifying ... "
