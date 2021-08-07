@@ -1,6 +1,6 @@
 # ProjectEuler
 
-(https://projecteuler.net/profile/melwyncarlo.png)
+![ProjectEuler Badge](https://projecteuler.net/profile/melwyncarlo.png)
 
 ### <br>Description
 
