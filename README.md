@@ -26,13 +26,9 @@ These instructions are primarily for the Ubuntu/Linux system. First, open a comm
 
 2. To compile the projects and produce executables, use the following command: `./make`
 
-3. To run the C, Fortran, and Ada executables of a particular project, say PROBLEM-001, use the following commands respectively:
+3. To run and view the results of the C, Fortran, and Ada executables of a particular project, say PROBLEM-001, use the following command:
 
-* `./run 1 c`
-
-* `./run 1 f`
-
-* `./run 1 a`
+* `./run 1`
 
 <br>
 To clean the projects, by removing the executables and restoring the folder to its former state, use the following command: 
