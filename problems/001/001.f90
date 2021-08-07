@@ -11,8 +11,6 @@ PROGRAM F001
     INTEGER, PARAMETER :: VAL_3A = FLOOR((1000.0 - 1.0) / 15.0);
     INTEGER, PARAMETER :: VAL_3B = 15 * ((VAL_3A * (VAL_3A + 1)) / 2);
 
-    PRINT *, NEW_LINE('1'), NEW_LINE('1'),  &
-             VAL_1B + VAL_2B - VAL_3B,      &
-             NEW_LINE('1'), NEW_LINE('1')
+    PRINT ('(I0)'), VAL_1B + VAL_2B - VAL_3B
 
 END PROGRAM F001

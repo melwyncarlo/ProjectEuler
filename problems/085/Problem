@@ -1,0 +1,24 @@
+--------------------------------------------------------------------------------
+ Problem-085
+--------------------------------------------------------------------------------
+
+ Title: Counting rectangles
+
+--------------------------------------------------------------------------------
+
+ By counting carefully it can be seen that a rectangular grid measuring 
+ 3 by 2 contains eighteen rectangles:
+
+   6 x 1-by-1's 
+ + 4 x 1-by-2's 
+ + 2 x 1-by-3's 
+ + 3 x 2-by-1's 
+ + 2 x 2-by-2's 
+ + 1 x 3-by-3's 
+ = 18
+
+ Although there exists no rectangular grid that contains exactly 
+ two million rectangles, find the area of the grid with the nearest solution.
+
+--------------------------------------------------------------------------------
+

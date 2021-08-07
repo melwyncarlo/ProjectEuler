@@ -1,10 +1,15 @@
-with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Strings; use Ada.Strings;
-with Ada.Strings.Fixed; use Ada.Strings.Fixed;
+with Ada.Strings;
+with Ada.Strings.Fixed;
+with Ada.Integer_Text_IO;
 
--- Copyright 2021 Melwyn Francis Carlo
+--  Copyright 2021 Melwyn Francis Carlo
 
 procedure A004 is
+
+   use Ada.Strings;
+   use Ada.Strings.Fixed;
+   use Ada.Integer_Text_IO;
+
    ----------------------------------------------------------------------------
    procedure StrRev       (Inp_Str : in out String);
    function Is_Palindrome (N_Val   : in Integer) return Boolean;
@@ -28,7 +33,7 @@ procedure A004 is
                                            N_Str'Length / 2));
       N_Len_by_2_Int : constant Integer := Integer (N_Len_by_2);
       N_Str_Split_1  : constant String  := N_Str (1 .. N_Len_by_2_Int);
-      N_Str_Split_2  : String           := N_Str (N_Len_by_2_Int + 1 .. 
+      N_Str_Split_2  : String           := N_Str (N_Len_by_2_Int + 1 ..
                                            N_Str'Length);
    begin
       StrRev (N_Str_Split_2);
@@ -43,20 +48,20 @@ procedure A004 is
    ----------------------------------------------------------------------------
 begin
 
-   for I in reverse 900 .. 999 loop
+   Loop_I :
+      for I in reverse 900 .. 999 loop
 
-      for J in reverse 900 .. 999 loop
-         N := I * J;
+         for J in reverse 900 .. 999 loop
+            N := I * J;
 
-         if Is_Palindrome (N) then
-            New_Line (2);
-            Put_Line (Integer'Image (N));
-            New_Line (2);
-            return;
-         end if;
+            if Is_Palindrome (N) then
+               exit Loop_I;
+            end if;
 
-      end loop;
+         end loop;
 
-   end loop;
+      end loop Loop_I;
+
+   Put (N, Width => 0);
 
 end A004;

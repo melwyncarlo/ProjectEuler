@@ -11,8 +11,6 @@ PROGRAM F006
     SQUARE_OF_SUM = N_SUM * N_SUM;
     SUM_OF_SQUARE = (N * (N + 1) * ((2 * N) + 1)) / 6;
 
-    PRINT *, NEW_LINE('1'), NEW_LINE('1'),  &
-             SQUARE_OF_SUM - SUM_OF_SQUARE, &
-             NEW_LINE('1'), NEW_LINE('1')
+    PRINT ('(I0)'), SQUARE_OF_SUM - SUM_OF_SQUARE
 
 END PROGRAM F006

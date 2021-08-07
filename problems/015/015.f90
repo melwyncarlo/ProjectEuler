@@ -1,0 +1,19 @@
+PROGRAM F015
+
+    ! Copyright 2021 Melwyn Francis Carlo
+
+    IMPLICIT NONE
+
+    INTEGER, PARAMETER :: INPUT_GRID_DIMENSION = 20;
+
+    REAL (KIND=8)      :: ROUTES_N = 1;
+
+    INTEGER :: I
+
+    DO I = 1, INPUT_GRID_DIMENSION
+        ROUTES_N = ROUTES_N * REAL(I + INPUT_GRID_DIMENSION, 8) / REAL(I, 8);
+    END DO
+
+    PRINT ('(I0)'), CEILING(ROUTES_N, 8)
+
+END PROGRAM F015

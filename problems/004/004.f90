@@ -16,9 +16,9 @@ PROGRAM F004
         END DO
     END DO
 
-    10 PRINT *, NEW_LINE('1'), NEW_LINE('1'),   &
-                N,                              &
-                NEW_LINE('1'), NEW_LINE('1')
+    10 CONTINUE
+
+    PRINT ('(I0)'), N
 
 END PROGRAM F004
 
@@ -28,7 +28,7 @@ LOGICAL FUNCTION IS_PALINDROME (N_VAL)
     IMPLICIT NONE
 
     INTEGER, INTENT(IN) :: N_VAL
-    INTEGER :: I, N_LEN, N_LEN_BY_2
+    INTEGER :: I, N_LEN_BY_2
     CHARACTER (LEN=10)  :: N_STR
     CHARACTER (LEN=5)   :: N_STR_SPLIT_1, N_STR_SPLIT_2
 
@@ -45,5 +45,3 @@ LOGICAL FUNCTION IS_PALINDROME (N_VAL)
     END IF
 
 END FUNCTION IS_PALINDROME
-
-

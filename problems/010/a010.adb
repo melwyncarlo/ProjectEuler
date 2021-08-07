@@ -1,9 +1,10 @@
-with Ada.Text_IO;
-use Ada.Text_IO;
+with Ada.Long_Integer_Text_IO;
 
--- Copyright 2021 Melwyn Francis Carlo
+--  Copyright 2021 Melwyn Francis Carlo
 
 procedure A010 is
+
+   use Ada.Long_Integer_Text_IO;
 
    N          : constant Integer := 2E+6;
    Primes_Sum : Long_Integer     := 0;
@@ -15,7 +16,7 @@ procedure A010 is
 
 begin
 
-   -- Using the algorithm of Sieve of Eratosthenes
+   --  Using the algorithm of Sieve of Eratosthenes
 
    I := 2;
    while (I * I) <= N loop
@@ -41,8 +42,6 @@ begin
 
    end loop;
 
-   New_Line (2);
-   Put_Line (Long_Integer'Image (Primes_Sum));
-   New_Line (2);
+   Put (Primes_Sum, Width => 0);
 
 end A010;

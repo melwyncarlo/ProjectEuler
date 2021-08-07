@@ -4,16 +4,16 @@ PROGRAM F009
 
     IMPLICIT NONE
 
-    INTEGER :: A, C, PRODUCT_VAL
-    REAL (KIND=8) :: B
+    INTEGER :: A, PRODUCT_VAL
+    REAL (KIND=8) :: B, C
 
     A = 1
     DO
         B = (5E+5 - (1E+3 * A)) / (1E+3 - A)
-        IF ( ((B - INT(B)) == 0) .AND. (B > A) ) THEN
-            C = 1000 - A - B
+        IF ( ((B - INT(B)) <= 0) .AND. (B > A) ) THEN
+            C = 1000.0 - REAL(A, 8) - B
             IF (B < C) THEN
-                PRODUCT_VAL = A * B * C
+                PRODUCT_VAL = INT(REAL(A, 8) * B * C)
                 EXIT
             END IF
         END IF
@@ -23,8 +23,6 @@ PROGRAM F009
         END IF
     END DO
 
-    PRINT *, NEW_LINE('1'), NEW_LINE('1'),  &
-             PRODUCT_VAL,                   &
-             NEW_LINE('1'), NEW_LINE('1')
+    PRINT ('(I0)'), PRODUCT_VAL
 
 END PROGRAM F009

@@ -20,8 +20,6 @@ PROGRAM F005
         I = I + 1;
     END DO
 
-    PRINT *, NEW_LINE('1'), NEW_LINE('1'),   &
-             N,                              &
-             NEW_LINE('1'), NEW_LINE('1')
+    PRINT ('(I0)'), N
 
 END PROGRAM F005

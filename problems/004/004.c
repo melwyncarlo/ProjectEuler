@@ -18,29 +18,37 @@ char *strrev(char *str)
         return str;
 }
 
-int is_palindrome(int n_val) {
+int is_palindrome(int n_val)
+{
     char n_str[7], n_str_split_1[4], n_str_split_2[4];
+
     sprintf(n_str, "%d", n_val);
     sprintf(n_str_split_1, "%.*s", (int)(ceil)(strlen(n_str)/2), n_str + 0);
     sprintf(n_str_split_2, "%.*s", (int)(ceil)(strlen(n_str)/2), n_str 
         + (int)(floor)(strlen(n_str)/2));
+
     strrev((char*)n_str_split_2);
-    if (strcmp(n_str_split_1, n_str_split_2) == 0) {
+
+    if (strcmp(n_str_split_1, n_str_split_2) == 0)
         return 1;
-    } else {
+    else
         return 0;
-    }
 }
 
-int main() {
-    for (int i = 999; i >= 900; i--) {
-        for (int j = 999; j >= 900; j--) {
+int main()
+{
+    for (int i = 999; i >= 900; i--)
+    {
+        for (int j = 999; j >= 900; j--)
+        {
             int n = i * j;
-            if (is_palindrome(n) == 1) {
-                printf("\n%d\n\n", n);
+            if (is_palindrome(n) == 1)
+            {
+                printf("%d\n", n);
                 return 0;
             }
         }
     }
+
     return 0;
 }

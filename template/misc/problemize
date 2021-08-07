@@ -1,0 +1,275 @@
+#!/bin/bash
+
+# Copyright 2021 Melwyn Francis Carlo
+
+MAX_N=761
+
+echo
+echo -n  "----------------------------------------"
+echo     "-----------------------------------"
+echo     " PROJECT EULER - PROBLEM ARCHIVES - PROBLEM TITLES & DESCRIPTIONS"
+echo -n  "----------------------------------------"
+echo     "-----------------------------------"
+
+for i in $(seq 1 $MAX_N)
+do
+
+   i_PAD=`printf "%03d" $i`
+
+   # Checking if the problem directory exists.
+   if [ -d "problems/${i_PAD}" ]
+   then
+
+      filename="problems/${i_PAD}/Problem"
+
+      echo
+      echo " Creating the file '$filename' ..."
+
+      # Creating a Problem file.
+      echo -n "----------------------------------------" >  "$filename"
+      echo    "----------------------------------------" >> "$filename"
+      echo    " Problem-$i_PAD" >> "$filename"
+      echo -n "----------------------------------------" >> "$filename"
+      echo    "----------------------------------------" >> "$filename"
+      echo >> "$filename"
+
+      echo "   Downloading Problem $i_PAD ..."
+      page_contents=`wget -qO- "https://projecteuler.net/problem=$i"`
+
+      echo "   Parsing the HTML contents ..."
+
+      # Acquiring the problem title.
+      search_text_1="<div id=\"content\">"
+      diff_text_1=${page_contents#*$search_text_1}
+      index_1=$((${#page_contents} - ${#diff_text_1} - ${#search_text_1}))
+
+      page_contents="${page_contents:$index_1}"
+
+      search_text_2a="<h2>"
+      search_text_2b="</h2>"
+
+      diff_text_2a=${page_contents#*$search_text_2a}
+      diff_text_2b=${page_contents#*$search_text_2b}
+
+      index_2a=$((${#page_contents} - ${#diff_text_2a} - ${#search_text_2a}))
+      index_2b=$((${#page_contents} - ${#diff_text_2b} - ${#search_text_2b}))
+
+      title="${page_contents:$index_2a+4:$index_2b-$index_2a-4}"
+
+      if [[ "$title" =~ [^a-zA-Z0-9] ]]
+      then
+         # Removing HTML tags from the title text.
+         title=${title//"\$"/}
+         title=${title//"{"/}
+         title=${title//"}"/}
+         title=${title//"\""/"'"}
+         title=${title//"<i>"/}
+         title=${title//"</i>"/}
+         title=${title//"\mathcal"/}
+         title=${title//"<sup>"/"^"}
+         title=${title//"</sup>"/}
+         title=${title//"<sub>"/"_"}
+         title=${title//"</sub>"/}
+         title=${title//"<var>"/}
+         title=${title//"</var>"/}
+         title=${title//"\omega"/"ω"}
+         title=${title//"\sqrt"/"√"}
+      fi
+
+      echo "   Appending title to the Problem file ..."
+      echo " Title: $title" >> "$filename"
+      echo >> "$filename"
+      echo -n "----------------------------------------" >> "$filename"
+      echo    "----------------------------------------" >> "$filename"
+      echo >> "$filename"
+
+      # Acquiring the problem description.
+      search_text_1="<div class=\"problem_content\""
+      diff_text_1=${page_contents#*$search_text_1}
+      index_1=$((${#page_contents} - ${#diff_text_1} - ${#search_text_1}))
+
+      page_contents="${page_contents:$index_1}"
+
+      search_text_2="</div><br>"
+      diff_text_2=${page_contents#*$search_text_2}
+      index_2=$((${#page_contents} - ${#diff_text_2} - ${#search_text_2}))
+
+      description="${page_contents:0:$index_2}"
+
+      search_text_2=">"
+      diff_text_2=${description#*$search_text_2}
+      index_2=$((${#description} - ${#diff_text_2} - ${#search_text_2}))
+
+      description=" ${description:$index_2+1}"
+      description=`echo "$description" | tr -d '\n\r'`
+
+      # Removing HTML tags from the problem description.
+      is_termination_string=0
+      while [[ "$description" == *"\$\$"* ]]
+      do
+         if [ $is_termination_string -eq 0 ]
+         then
+            description=${description/"\$\$"/}
+            is_termination_string=1
+         else
+            description=${description/"\$\$"/"\n\n "}
+            is_termination_string=0
+         fi
+      done
+      description=${description//"\$"/}
+      description=${description//"−"/"-"}
+      description=${description//"\le"/"<="}
+      description=${description//"\ge"/">="}
+      description=${description//"&lt;"/"<"}
+      description=${description//"&gt;"/">"}
+      description=${description//"&nbsp;"/}
+      description=${description//"<p>"/}
+      description=${description//"<td>"/" "}
+      description=${description//"</td></tr>"/"\n "}
+      description=${description//"</td>"/}
+      description=${description//"<tr>"/}
+      description=${description//"</tr>"/}
+      description=${description//"<var>"/}
+      description=${description//"</var>"/}
+      description=${description//"<sub>"/"_"}
+      description=${description//"</sub>"/}
+      description=${description//"<sup>"/"^"}
+      description=${description//"</sup>"/}
+      description=${description//"<table>"/}
+      description=${description//"</table>"/"\n "}
+      description=${description//"<blockquote>"/}
+      description=${description//"<br /></blockquote>"/"\n\n "}
+      description=${description//"</p></blockquote>"/"\n\n "}
+      description=${description//"</p>\n</blockquote>"/"\n\n "}
+      description=${description//"</div></blockquote>"/"\n\n "}
+      description=${description//"</div>\n</blockquote>"/"\n\n "}
+      description=${description//"</blockquote>"/"\n\n "}
+      description=${description//"<b>"/}
+      description=${description//"</b>"/}
+      description=${description//"<i>"/}
+      description=${description//"</i>"/}
+      description=${description//"<u>"/}
+      description=${description//"</u>"/}
+      description=${description//"</a>"/}
+      description=${description//"<ul>"/}
+      description=${description//"<ol>"/}
+      description=${description//"</ol>"/}
+      description=${description//"<li>"/}
+
+      description=${description//"</ul>"/"\n "}
+      description=${description//"</li>"/"\n "}
+      description=${description//"<br />"/"\n "}
+      description=${description//"</p>"/"\n\n "}
+      description=${description//"</div>"/"\n\n "}
+      description=${description//"</dfn>"/}
+      description=${description//"</span>"/}
+      description=${description//" (right click and 'Save Link/Target As...')"/}
+
+      tags_list=("<a href=" "<p class=" "<blockquote class=" "<div class=" "<img src=" "<dfn title=" "<span class=")
+
+      j=0
+
+      while [ $j -lt ${#tags_list[@]} ]
+      do
+         search_text_1="${tags_list[$j]}"
+         diff_text_1=${description#*$search_text_1}
+         index_1=$((${#description} - ${#diff_text_1} - ${#search_text_1}))
+
+         if [ $index_1 -ge 0 ]
+         then
+            subtext="${description:$index_1}"
+
+            search_text_2=">"
+            diff_text_2=${subtext#*$search_text_2}
+            index_2=$((${#subtext} - ${#diff_text_2} - ${#search_text_2}))
+
+            description_sub_1="${description:0:$index_1}"
+            description_sub_2="${subtext:$index_2+1}"
+            description="${description_sub_1}${description_sub_2}"
+
+            continue
+         fi
+
+         let "j = j + 1"
+
+      done
+
+      description=${description//"<div>"/}
+
+      if [[ "${description:${#description}-5}" == "\n\n " ]]
+      then
+         description="${description:0:${#description}-5}"
+      fi
+
+      count=0
+      word=""
+      skip=0
+      description_v2=""
+      let "str_len = ${#description} - 1"
+      for j in $(seq 0 $str_len)
+      do
+
+         if [ $skip -eq 1 ]
+         then
+            skip=0
+            continue
+         fi
+
+         let "count = count + 1"
+
+         if [[ "${description:$j:1}" == " " ]]
+         then
+            let "count = count - 1"
+            if [[ "$word" =~ [a-zA-Z] && $count -gt 80 ]]
+            then
+               description_v2="${description_v2}\n ${word} "
+               count=${#word}
+               let "count = count + 2"
+            elif [[ "$word" =~ ^[0-9]+$ && $count -gt 75 ]]
+            then
+               description_v2="${description_v2}\n ${word} "
+               count=${#word}
+               let "count = count + 2"
+            else
+               description_v2="${description_v2}${word} "
+            fi
+            word=""
+            let "count = count + 1"
+         elif [[ "${description:$j:2}" == "\n" ]]
+         then
+            let "count = count - 1"
+            if [ $count -gt 80 ]
+            then
+               description_v2="${description_v2}\n ${word}\n"
+            else
+               description_v2="${description_v2}${word}\n"
+            fi
+            count=0
+            word=""
+            skip=1
+         else
+            word="${word}${description:$j:1}"
+         fi
+
+      done
+
+      let "count = count + ${#word}"
+      if [ $count -gt 80 ]
+      then
+         description_v2="${description_v2}\n "
+      fi
+      description_v2="${description_v2}${word}"
+
+      echo "   Appending description to the Problem file ..."
+      echo -e "$description_v2" >> "$filename"
+      echo >> "$filename"
+      echo -n "----------------------------------------" >> "$filename"
+      echo    "----------------------------------------" >> "$filename"
+      echo >> "$filename"
+
+   fi
+
+done
+
+echo -e "\n"
+

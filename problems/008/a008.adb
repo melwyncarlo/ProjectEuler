@@ -1,9 +1,10 @@
-with Ada.Text_IO;
-use Ada.Text_IO;
+with Ada.Long_Integer_Text_IO;
 
--- Copyright 2021 Melwyn Francis Carlo
+--  Copyright 2021 Melwyn Francis Carlo
 
 procedure A008 is
+
+   use Ada.Long_Integer_Text_IO;
 
    Thousand_Digit_Num : constant String :=
       "73167176531330624919225119674426574742355349194934" &
@@ -55,8 +56,6 @@ begin
 
    end loop;
 
-   New_Line (2);
-   Put_Line (Long_Integer'Image (Product));
-   New_Line (2);
+   Put (Product, Width => 0);
 
 end A008;

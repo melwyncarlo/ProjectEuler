@@ -1,10 +1,13 @@
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Integer_Text_IO;
 with Ada.Numerics.Long_Elementary_Functions;
-use Ada.Numerics.Long_Elementary_Functions;
 
--- Copyright 2021 Melwyn Francis Carlo
+--  Copyright 2021 Melwyn Francis Carlo
 
 procedure A002 is
+
+   use Ada.Integer_Text_IO;
+   use Ada.Numerics.Long_Elementary_Functions;
+
    ----------------------------------------------------------------------------
    function Binets_Formula (N_Val : in Integer) return Long_Float;
 
@@ -26,8 +29,6 @@ begin
    Fn_Sum      := Binets_Formula (N + 2) - 1.0;
    Fn_Sum_Even := Fn_Sum / 2.0;
 
-   New_Line (2);
-   Put_Line (Integer'Image (Integer (Fn_Sum_Even)));
-   New_Line (2);
+   Put (Integer (Fn_Sum_Even), Width => 0);
 
 end A002;

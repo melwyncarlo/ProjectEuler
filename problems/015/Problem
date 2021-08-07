@@ -1,0 +1,22 @@
+--------------------------------------------------------------------------------
+ Problem-015
+--------------------------------------------------------------------------------
+
+ Title: Lattice paths
+
+--------------------------------------------------------------------------------
+
+ Starting in the top left corner of a 2×2 grid, and only being able to move 
+ to the right and down, there are exactly 6 routes to the bottom right corner.
+
+ 1. Right - Right - Down  - Down
+ 2. Right - Down  - Right - Down
+ 3. Right - Down  - Down  - Right
+ 4. Down  - Right - Right - Down
+ 5. Down  - Right - Down  - Right
+ 6. Down  - Down  - Right - Right
+
+ How many such routes are there through a 20×20 grid?
+
+--------------------------------------------------------------------------------
+

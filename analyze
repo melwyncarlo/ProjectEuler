@@ -1,0 +1,401 @@
+#!/bin/bash
+
+# Copyright 2021 Melwyn Francis Carlo
+
+
+# Global constant denoting the maximum number of Project Euler problems.
+# ---------------------------------------------------------------------------- #
+MAX_N=761
+# ---------------------------------------------------------------------------- #
+
+
+header="Sr. No., "
+header+="Completion Status, , , "
+header+="Approx. Lines of Code, , , "
+header+="Execution Time (in ms), , "
+
+# You may replace this with your preferred programming languages.
+subheader="C, Fortran, Ada"
+
+
+# Introductory message
+# ---------------------------------------------------------------------------- #
+echo
+echo -n  "----------------------------------------"
+echo     "-----------------------------------"
+echo     " PROJECT EULER - PROBLEM ARCHIVES - SOLUTIONS : ANALYZING"
+echo -n  "----------------------------------------"
+echo     "-----------------------------------"
+# ---------------------------------------------------------------------------- #
+
+
+# Creating a CSV file, and inserting the header and sub-header data into it.
+# ---------------------------------------------------------------------------- #
+# You may replace this with your preferred CSV filename.
+csv_filename="Statistics_Data.csv"
+echo
+echo
+echo " Creating the file '$csv_filename' ..."
+echo
+echo
+
+echo -ne "${header}\n , ${subheader}, " >  $csv_filename
+echo  -e "${subheader}, ${subheader}\n" >> $csv_filename
+# ---------------------------------------------------------------------------- #
+
+
+# Extracting the ZIP files over here.
+if [ ! -f "problems/003/PrimeNumbers_Upto_1000000" ]
+then
+   unzip -oqq problems/003/PrimeNumbers_Upto_1000000.zip -d problems/003
+fi
+
+
+# ---------------------------------------------------------------------------- #
+# You may replace this with your preferred programming languages' full names.
+langstr=("C" "Fortran" "Ada")
+# You may replace this with your preferred programming languages' extensions.
+langs=("c" "f90" "adb")
+# You may replace this with your executables' file names' prefixes.
+prefix=("" "" "a")
+# ---------------------------------------------------------------------------- #
+
+
+# A 9-element number-based array to contain statistical data as per the
+# header and sub-header information above.
+data=("" "" "" "" "" "" "" "" "")
+
+for i in $(seq 1 $MAX_N)
+do
+
+    i_PAD=`printf "%03d" $i`
+
+    # Checking if the problem directory exists.
+    if [ -d "problems/${i_PAD}" ]
+    then
+
+        echo " Problem Archives Number ${i_PAD}:"
+
+        for l in "${!langs[@]}"
+        do
+
+            dirname="problems/${i_PAD}/"
+            filename="${prefix[$l]}${i_PAD}.${langs[$l]}"
+
+            # Displaying sub-introductory text.
+            echo -n " |________________________________________"
+            echo    "_________________________________"
+            echo " |"
+            echo " | ${langstr[$l]} Programming Language :: File '${filename}':"
+            echo " |"
+
+            count=0
+            template_text_1_exists=0
+            template_text_2_exists=0
+            template_text_3_exists=0
+
+            echo    " |   Parsing the file and counting lines    ... "
+            echo -n " |   Is it a non-template-based file ?      ... "
+
+            # Parsing the file to test for template-based keywords.
+            # Counting the number of line of code in file.
+            while IFS= read line
+            do
+                if [[ "$line" == *"Hello World"* ]]
+                then
+                    template_text_1_exists=1
+                fi
+                if [[ "$line" == *"2021"* ]]
+                then
+                    template_text_2_exists=1
+                fi
+                if [[ "$line" == *"with Ada.Text_IO;"* ]]
+                then
+                    template_text_3_exists=1
+                fi
+                let "count = count + 1"
+            done <"${dirname}${filename}"
+
+            # If the file is template-based.
+            if [ $template_text_1_exists -eq 1 -a $template_text_2_exists -eq 1 ]
+            then
+                echo "NO"
+                data[$l]="❌"
+                data[${l}+3]="-"
+                data[${l}+6]="-"
+
+            # If the file is NON-template-based.
+            else
+
+                echo "YES"
+                data[$l]="✅"
+
+                # Calculating the approximate number of lines in magnitude of tens.
+                count_tens=$(( $count / 10 ))
+                let "count_tens = count_tens * 10"
+                if [ $(( $count % 10 )) -ge 5 ]
+                then
+                    let "count_tens = count_tens + 10"
+                fi
+                data[${l}+3]="$count_tens"
+
+                echo " |   Absolute    number of lines of code is ... $count"
+                echo " |   Approximate number of lines of code is ... $count_tens"
+
+                # Creating a duplicate (and temporary) copy of the file, and
+                # adding analysis code headers to the file.
+                if [ $l -eq 0 ]
+                then
+                    echo "#include <time.h>" > "$filename"
+                elif [ $l -eq 2 ]
+                then
+                    temp_str=""
+                    if [ $template_text_3_exists -eq 0 ]
+                    then
+                        temp_str+="with Ada.Text_IO; use Ada.Text_IO;\n"
+                    fi
+                    temp_str+="with Ada.Calendar; use Ada.Calendar;\n"
+                    temp_str+="with Ada.Float_Text_IO;"
+                    echo -e "$temp_str" > "$filename"
+                else
+                    echo -n "" > "$filename"
+                fi
+
+                echo " |   Creating a probed version of the file  ..."
+
+                stage=0
+                ampsand=0
+                stage_2_found=0
+                append_text=""
+
+
+# Adding analysis code to the duplicate file.
+# ---------------------------------------------------------------------------- #
+# If you are using other programming languages, 
+# then you may replace the following operations as required.
+# The following operations require the user to adhere to certain rules, 
+# which are described in the READ-ME file of the Github repository.
+
+                while IFS= read -r line
+                do
+                    # C Program File.
+                    if [ $l -eq 0 ]
+                    then
+                        if [[ "$stage" == "0" && "$line" == *"int main"* ]]
+                        then
+                            stage=1
+                            echo -e "$line" >> "$filename"
+                        elif [[ "$stage" == "1" && "$line" == *"{"* ]]
+                        then
+                            stage=2
+                            echo -e "{\n    clock_t s = clock();\n" >> "$filename"
+                        elif [[ "$stage" == "2"        && "$line" == *"printf"* \
+                             && "$line" != *"sprintf"* && "$line" != *"fprintf"* ]]
+                        then
+                            stage=3
+                            temp_str="    clock_t e = clock();\n"
+                            temp_str+="    printf(\"<===%.3lf===>\", "
+                            temp_str+="(double)(e-s)*1.0E3/CLOCKS_PER_SEC);\n"
+                            echo -e "$temp_str" >> "$filename"
+                            echo    "$line" >> "$filename"
+                        else
+                            echo -e "$line" >> "$filename"
+                        fi
+
+                    # Fortran Program File.
+                    elif [ $l -eq 1 ]
+                    then
+                        if [[ "$stage" == "0" \
+                        &&    "$line" == *"IMPLICIT"* && "$line" == *"NONE"* ]]
+                        then
+                            stage=1
+                            echo -e "${line}\n\n    REAL :: S, E" >> "$filename"
+                        elif [[ $stage -eq 1 ]]
+                        then
+                            if [[ "$line" == *"::"* ]]
+                            then
+                                if [[ "$line" == *" &"* ]]
+                                then
+                                    ampsand=1
+                                else
+                                    ampsand=0
+                                fi
+                                echo -e "$line" >> "$filename"
+                            elif [[ "$line" == *"!"* ]]
+                            then
+                                ampsand=0
+                                echo -e "$line" >> "$filename"
+                            else
+                                line_TRIMMED="$(echo -e "$line" | tr -d '[:space:]')"
+                                if [[ "$line_TRIMMED" == "" ]]
+                                then
+                                    ampsand=0
+                                    echo -e "$line" >> "$filename"
+                                    continue
+                                fi
+                                if [[ "$line" == *" &"* ]]
+                                then
+                                    ampsand=1
+                                    echo -e "$line" >> "$filename"
+                                else
+                                    if [ $ampsand -eq 0 ]
+                                    then
+                                        stage=2
+                                        temp_str="    CALL CPU_TIME(S)\n"
+                                        if [[ "$line" == *"PRINT"* \
+                                        &&    "$line" == *"'("* ]]
+                                        then
+                                            stage_2_found=1
+                                            append_text="$line"
+                                            echo -e "$temp_str" >> "$filename"
+                                        else
+                                            echo -ne "${temp_str}" >> "$filename"
+                                            echo  -e "${line}" >> "$filename"
+                                        fi
+                                        continue
+                                    else
+                                        ampsand=0
+                                        echo -e "$line" >> "$filename"
+                                    fi
+                                fi
+                            fi
+                        elif [ $stage -eq 2 ]
+                        then
+                            if [[ "$stage_2_found" == "1" \
+                            ||   ("$line" == *"PRINT"* && "$line" == *"'("*) ]]
+                            then
+                                stage=3
+                                temp_str="    CALL CPU_TIME(E)\n"
+                                temp_str+="    PRINT '(\"<===\",F0.3,\"===>\")'"
+                                temp_str+=", (E - S)*1.0E3\n"
+                                echo -e "$temp_str" >> "$filename"
+                                echo    "$append_text" >> "$filename"
+                                echo    "$line" >> "$filename"
+                            else
+                                echo -e "$line" >> "$filename"
+                            fi
+                        else
+                            echo -e "$line" >> "$filename"
+                        fi
+
+                    # Ada Program File.
+                    else # if [ $l -eq 2 ]
+
+                        if [[ "$stage" == "0" && "${line:0:5}" == *"begin"* ]]
+                        then
+                            stage=1
+                            temp_str="   S : constant Time := Clock;\n"
+                            temp_str+="   E : Time;\n\n"
+                            echo -e "${temp_str}${line}" >> "$filename"
+                        elif [[ "$stage" == "1" && "$line" == *"Put ("* ]]
+                        then
+                            stage=2
+                            temp_str="   E := Clock;\n"
+                            temp_str+="   Put (\"<===\");\n"
+                            temp_str+="   Ada.Float_Text_IO.Put (Float'Value "
+                            temp_str+="(Duration'Image (E - S)) * 1.0E3,\n"
+                            temp_str+="   Fore => 0, Aft => 3, Exp => 0);\n"
+                            temp_str+="   Put (\"===>\");\n"
+                            echo -e "$temp_str" >> "$filename"
+                            echo    "$line" >> "$filename"
+                        else
+                            echo -e "$line" >> "$filename"
+                        fi
+                    fi
+
+                done <"${dirname}${filename}"
+# ---------------------------------------------------------------------------- #
+
+
+# Compiling the duplicate program files, and creating executables.
+# Executing the executables and transferring the output to the log file.
+# Deleting the duplicate program files and the executables.
+# ---------------------------------------------------------------------------- #
+# If you are using other programming languages, 
+# then you may replace the compilation commands with 
+# their equivalents for the other programming languages.
+# Make sure to set the standard flag, all errors and warnings flags, 
+# as well as the level 3 optimization flag.
+
+                # C Program File.
+                if [ $l -eq 0 ]
+                then
+                    #------ C program compilation command, starts here. -------#
+                    gcc -O3 -Wall -std=c17 -Wextra -Wpedantic \
+                    -pedantic-errors "${i_PAD}.c" -o "c${i_PAD}" -lm
+                    #------ C program compilation command, ends here.   -------#
+                    "./c${i_PAD}" 1>log 2>&1
+                    rm -f "${i_PAD}.c"
+                    rm -f "c${i_PAD}"
+
+                # Fortran Program File.
+                elif [ $l -eq 1 ]
+                then
+                    #---- Fortran program compilation command, starts here. ---#
+                    gfortran -O3 -Wall -std=f2008 -Wextra -Wpedantic \
+                    -pedantic-errors "${i_PAD}.f90" -o "f${i_PAD}"
+                    #---- Fortran program compilation command, ends here.   ---#
+                    "./f${i_PAD}" 1>log 2>&1
+                    rm -f "${i_PAD}.f90"
+                    rm -f "f${i_PAD}"
+
+                # Ada Program File.
+                else # if [ $l -eq 2 ]
+                    #----- Ada program compilation command, starts here. ------#
+                    gnat make -q -f -gnat12 -gnatVa -gnaty9y -gnato \
+                    -gnatw.e -gnatw.O -O3 "a${i_PAD}.adb" -o "a${i_PAD}"
+                    #----- Ada program compilation command, ends here.   ------#
+                    "./a${i_PAD}" 1>log 2>&1
+                    rm -f "a${i_PAD}.adb"
+                    rm -f "a${i_PAD}"
+                    # Deleting the redundant Ada output files.
+                    rm -f "a${i_PAD}.ali"
+                    rm -f "a${i_PAD}.o"
+                fi
+# ---------------------------------------------------------------------------- #
+
+
+                # Reading the log file into a variable, and parsing the 
+                # string contents for the decimal-based, execution time value.
+                log_text=$(<log)
+                search_text_1="<==="
+                search_text_2="===>"
+                diff_text_1=${log_text#*$search_text_1}
+                diff_text_2=${log_text#*$search_text_2}
+
+                index_1=$((${#log_text} - ${#diff_text_1} - ${#search_text_1}))
+                index_2=$((${#log_text} - ${#diff_text_2} - ${#search_text_2}))
+
+                execution_time="${log_text:${index_1}+4:${index_2}-4}"
+
+                if [[ "${execution_time:0:1}" == "." ]]
+                then
+                    execution_time="0$execution_time"
+                fi
+
+                data[${l}+6]="$execution_time"
+            
+            fi
+
+        done
+
+        # Appending a row of the above acquired statistical data into the CSV file.
+        echo -ne "${i}, ${data[0]}, ${data[1]}, "       >> $csv_filename
+        echo -ne "${data[2]}, ${data[3]}, ${data[4]}, " >> $csv_filename
+        echo -ne "${data[5]}, ${data[6]}, ${data[7]}, " >> $csv_filename
+        echo  -e "${data[8]}" >> $csv_filename
+
+        echo -n " |________________________________________"
+        echo    "_________________________________"
+        echo -e "\n\n"
+
+    fi
+
+done
+
+# Deleting the extracted ZIP contents over here.
+rm -f "problems/003/PrimeNumbers_Upto_1000000"
+
+# Deleting the log file.
+rm -f log
+

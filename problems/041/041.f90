@@ -1,0 +1,55 @@
+PROGRAM F041
+
+    ! Copyright 2021 Melwyn Francis Carlo
+    ! FILE REFERENCE: http://www.naturalnumbers.org/primes.html
+
+    IMPLICIT NONE
+
+    CHARACTER (LEN=9), PARAMETER  :: DIGIT = "123456789"
+
+    INTEGER :: PRIME_NUM
+    CHARACTER (LEN=50), PARAMETER :: FILENAME = "problems/003/PrimeNumbers_Upto_1000000"
+
+    CHARACTER (LEN=10) :: PRIME_NUM_STR
+
+    INTEGER :: LARGEST_PANDIGITAL_PRIME = 0
+
+    INTEGER :: I, STR_LEN
+
+    LOGICAL :: IS_PANDIGITAL
+
+    OPEN (2, FILE = FILENAME, STATUS = 'OLD')
+
+    DO
+        READ(2, *, END=10) PRIME_NUM
+
+        IF (PRIME_NUM > 7654321) EXIT
+
+        STR_LEN = INT(LOG10(REAL(PRIME_NUM)))
+
+        IS_PANDIGITAL = .TRUE.
+
+        WRITE(PRIME_NUM_STR, '(I10)') PRIME_NUM
+        PRIME_NUM_STR = ADJUSTL(PRIME_NUM_STR)
+
+        DO I = 1, STR_LEN
+
+            IF (INDEX(PRIME_NUM_STR, DIGIT(I:I)) == 0) THEN
+                IS_PANDIGITAL = .FALSE.
+                EXIT
+            END IF
+        END DO
+
+        IF (IS_PANDIGITAL) THEN
+            IF (PRIME_NUM > LARGEST_PANDIGITAL_PRIME) THEN
+                LARGEST_PANDIGITAL_PRIME = PRIME_NUM
+            END IF
+        END IF
+
+    END DO
+
+    10 CLOSE(2)
+
+    PRINT ('(I0)'), LARGEST_PANDIGITAL_PRIME
+
+END PROGRAM F041

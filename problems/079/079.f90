@@ -1,0 +1,62 @@
+PROGRAM F079
+
+    ! Copyright 2021 Melwyn Francis Carlo
+
+    IMPLICIT NONE
+
+    CHARACTER (LEN=50), PARAMETER :: FILENAME = "problems/079/p079_keylog.txt"
+    CHARACTER (LEN=5)  :: PASSCODE_ATTEMPT_STR
+
+    CHARACTER (LEN=10) :: PASSCODE
+
+    INTEGER, DIMENSION(0:9) :: PASSCODE_POSITIONS =                            &
+                               (/ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 /)
+
+    INTEGER :: INDEX_VAL = 1
+
+    INTEGER :: I, J, DIGIT_1, DIGIT_2, DIGIT_3, SWAP_VAL
+
+    OPEN (2, FILE = FILENAME, STATUS = 'OLD')
+
+    DO
+        READ(2, '(A)', END=10) PASSCODE_ATTEMPT_STR
+
+        DIGIT_1 = IACHAR(PASSCODE_ATTEMPT_STR(1:1)) - IACHAR('0')
+        DIGIT_2 = IACHAR(PASSCODE_ATTEMPT_STR(2:2)) - IACHAR('0')
+        DIGIT_3 = IACHAR(PASSCODE_ATTEMPT_STR(3:3)) - IACHAR('0')
+
+        IF (PASSCODE_POSITIONS(DIGIT_1) >= PASSCODE_POSITIONS(DIGIT_2)) THEN
+            SWAP_VAL                     = PASSCODE_POSITIONS(DIGIT_1)
+            PASSCODE_POSITIONS(DIGIT_1)  = PASSCODE_POSITIONS(DIGIT_2)
+            PASSCODE_POSITIONS(DIGIT_2)  = SWAP_VAL
+        END IF
+
+        IF (PASSCODE_POSITIONS(DIGIT_2) >= PASSCODE_POSITIONS(DIGIT_3)) THEN
+            SWAP_VAL                     = PASSCODE_POSITIONS(DIGIT_2)
+            PASSCODE_POSITIONS(DIGIT_2)  = PASSCODE_POSITIONS(DIGIT_3)
+            PASSCODE_POSITIONS(DIGIT_3)  = SWAP_VAL
+        END IF
+
+    END DO
+
+    10 CLOSE(2)
+
+    DO I = 0, 9
+
+        IF (PASSCODE_POSITIONS(I) == (I + 1)) CYCLE
+
+        DO J = 0, 9
+
+            IF (PASSCODE_POSITIONS(J) == (I + 1)) THEN
+                PASSCODE(INDEX_VAL:INDEX_VAL) = ACHAR(J + IACHAR('0'))
+                INDEX_VAL = INDEX_VAL + 1
+                EXIT
+            END IF
+
+        END DO
+
+    END DO
+
+    PRINT ('(A)'), PASSCODE
+
+END PROGRAM F079

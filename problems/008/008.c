@@ -3,7 +3,8 @@
 
 /* Copyright 2021 Melwyn Francis Carlo */
 
-int main() {
+int main()
+{
     char *thousand_digit_num = 
         "73167176531330624919225119674426574742355349194934"
         "96983520312774506326239578318016984801869478851843"
@@ -25,16 +26,24 @@ int main() {
         "84580156166097919133875499200524063689912560717606"
         "05886116467109405077541002256983155200055935729725"
         "71636269561882670428252483600823257530420752963450";
+
     long int product = 0;
-    for (unsigned int i = 0; i < strlen(thousand_digit_num)-13; i++) {
-        if ((thousand_digit_num[i] - '0') >= 5) {
+
+    for (unsigned int i = 0; i < strlen(thousand_digit_num)-13; i++)
+    {
+        if ((thousand_digit_num[i] - '0') >= 5)
+        {
             long int temp_val = 1;
+
             for (int j = 0; j < 13; j++)
                 temp_val *= thousand_digit_num[i+j] - '0';
+
             if (temp_val > product)
                 product = temp_val;
         }
     }
-    printf("\n%ld\n\n", product);
+
+    printf("%ld\n", product);
+
     return 0;
 }

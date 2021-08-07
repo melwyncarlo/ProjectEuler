@@ -29,8 +29,6 @@ PROGRAM F010
         END IF
     END DO
 
-    10 PRINT *, NEW_LINE('1'), NEW_LINE('1'),   &
-                PRIMES_SUM,                     &
-                NEW_LINE('1'), NEW_LINE('1')
+    PRINT ('(I0)'), PRIMES_SUM
 
 END PROGRAM F010

@@ -43,8 +43,6 @@ PROGRAM F008
         END IF
     END DO
 
-    PRINT *, NEW_LINE('1'), NEW_LINE('1'),  &
-             PRODUCT_VAL,                   &
-             NEW_LINE('1'), NEW_LINE('1')
+    PRINT ('(I0)'), PRODUCT_VAL
 
 END PROGRAM F008

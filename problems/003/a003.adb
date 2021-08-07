@@ -1,12 +1,16 @@
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Text_IO;
+with Ada.Long_Integer_Text_IO;
 with Ada.Numerics.Long_Elementary_Functions;
-use Ada.Numerics.Long_Elementary_Functions;
 
--- Copyright 2021 Melwyn Francis Carlo
+--  Copyright 2021 Melwyn Francis Carlo
 
 procedure A003 is
 
-   -- File Reference: http://www.naturalnumbers.org/primes.html
+   use Ada.Text_IO;
+   use Ada.Long_Integer_Text_IO;
+   use Ada.Numerics.Long_Elementary_Functions;
+
+   --  File Reference: http://www.naturalnumbers.org/primes.html
 
    FT                : File_Type;
    Last_Index        : Natural;
@@ -15,7 +19,8 @@ procedure A003 is
    Prime_Num_Largest : Long_Integer;
 
    N                 : constant Long_Integer := 600851475143;
-   File_Name         : constant String       := "problems/003/PrimeNumbers_Upto_1000000";
+   File_Name         : constant String       :=
+                      "problems/003/PrimeNumbers_Upto_1000000";
 
 begin
 
@@ -25,8 +30,11 @@ begin
    Open (FT, In_File, File_Name);
 
    while not End_Of_File (FT) loop
+
       Get_Line (FT, Prime_Num, Last_Index);
-      exit when Long_Integer'Value (Prime_Num (1 .. Last_Index)) > Prime_Num_Max;
+
+      exit when Long_Integer'Value (Prime_Num (1 .. Last_Index))
+                                  > Prime_Num_Max;
 
       if (N mod Long_Integer'Value (Prime_Num (1 .. Last_Index))) = 0 then
          Prime_Num_Largest := Long_Integer'Value (Prime_Num (1 .. Last_Index));
@@ -36,8 +44,6 @@ begin
 
    Close (FT);
 
-   New_Line (2);
-   Put_Line (Long_Integer'Image (Prime_Num_Largest));
-   New_Line (2);
+   Put (Prime_Num_Largest, Width => 0);
 
 end A003;

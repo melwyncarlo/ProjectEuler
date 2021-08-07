@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# Copyright 2021 Melwyn Francis Carlo
+
+echo
+echo -n  "----------------------------------------"
+echo     "-----------------------------------"
+echo     " PROJECT EULER - PROBLEM ARCHIVES - PROBLEM TITLES"
+echo -n  "----------------------------------------"
+echo     "-----------------------------------"
+
+echo
+echo " Creating the file 'Titles.csv' ..."
+echo
+
+# Creating a CSV file.
+echo "Sr. No., Title" > Titles.csv
+
+i=1
+
+while :
+do
+
+   i_PAD=`printf "%03d" $i`
+
+   http_result=1
+
+   while [ $http_result -ne 0 ]
+   do
+      echo " Attempting to download Problem $i_PAD ..."
+      page_contents=`wget -qO- "https://projecteuler.net/problem=$i"`
+      http_result=$?
+   done
+
+   echo " Parsing the HTML contents ..."
+
+   search_text_1="<div id=\"content\">"
+   diff_text_1=${page_contents#*$search_text_1}
+   index_1=$((${#page_contents} - ${#diff_text_1} - ${#search_text_1}))
+
+   page_contents="${page_contents:$index_1}"
+
+   search_text_2a="<h2>"
+   search_text_2b="</h2>"
+
+   diff_text_2a=${page_contents#*$search_text_2a}
+   diff_text_2b=${page_contents#*$search_text_2b}
+
+   index_2a=$((${#page_contents} - ${#diff_text_2a} - ${#search_text_2a}))
+   index_2b=$((${#page_contents} - ${#diff_text_2b} - ${#search_text_2b}))
+
+   title="${page_contents:$index_2a+4:$index_2b-$index_2a-4}"
+
+   if [[ "$title" != "Problems Archives" ]]
+   then
+
+      if [[ "$title" =~ [^a-zA-Z0-9] ]]
+      then
+         # Removing HTML tags from the title text.
+         title=${title//"\$"/}
+         title=${title//"{"/}
+         title=${title//"}"/}
+         title=${title//"\""/"'"}
+         title=${title//"<i>"/}
+         title=${title//"</i>"/}
+         title=${title//"\mathcal"/}
+         title=${title//"<sup>"/"^"}
+         title=${title//"</sup>"/}
+         title=${title//"<sub>"/"_"}
+         title=${title//"</sub>"/}
+         title=${title//"<var>"/}
+         title=${title//"</var>"/}
+         title=${title//"\omega"/"ω"}
+         title=${title//"\sqrt"/"√"}
+      fi
+
+      echo " Appending title to the CSV file ..."
+      echo "$i, \"$title\"" >> Titles.csv
+   else
+      echo " Problem $i_PAD does NOT exist."
+      break
+   fi
+   echo
+
+   let "i = i + 1"
+
+done
+
+echo
+

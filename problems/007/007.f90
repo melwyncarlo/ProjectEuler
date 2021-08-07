@@ -5,7 +5,7 @@ PROGRAM F007
     IMPLICIT NONE
 
     INTEGER, PARAMETER :: NTH = 10001, N = 1E+6
-    INTEGER :: I, J, N_SUM, SQUARE_OF_SUM, SUM_OF_SQUARE, PRIMES_N
+    INTEGER :: I, J, PRIMES_N
     LOGICAL, DIMENSION(N+1) :: INTEGERS_LIST
 
     ! USING THE ALGORITHM OF SIEVE OF EROSTHENES
@@ -21,6 +21,7 @@ PROGRAM F007
         END IF
         I = I + 1
     END DO
+
     PRIMES_N = 0
     DO I = 2, N
         IF (INTEGERS_LIST(I)) THEN
@@ -31,8 +32,8 @@ PROGRAM F007
         END IF
     END DO
 
-    10 PRINT *, NEW_LINE('1'), NEW_LINE('1'),   &
-                I,                              &
-                NEW_LINE('1'), NEW_LINE('1')
+    10 CONTINUE
+
+    PRINT ('(I0)'), I
 
 END PROGRAM F007

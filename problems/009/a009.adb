@@ -1,9 +1,10 @@
-with Ada.Text_IO;
-use Ada.Text_IO;
+with Ada.Integer_Text_IO;
 
--- Copyright 2021 Melwyn Francis Carlo
+--  Copyright 2021 Melwyn Francis Carlo
 
 procedure A009 is
+
+   use Ada.Integer_Text_IO;
 
    B             : Float;
    A, C, Product : Integer;
@@ -31,8 +32,6 @@ begin
 
    end loop;
 
-   New_Line (2);
-   Put_Line (Integer'Image (Product));
-   New_Line (2);
+   Put (Product, Width => 0);
 
 end A009;
